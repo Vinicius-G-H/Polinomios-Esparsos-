@@ -2,6 +2,9 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -O2 -std=c11
 
+# Força o uso do bash como shell das receitas (pro 'time' embutido funcionar)
+SHELL := /bin/bash
+
 # Executáveis
 MAIN_EXEC = programa
 GERADOR_EXEC = gerador
