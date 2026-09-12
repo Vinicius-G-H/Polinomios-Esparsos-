@@ -4,7 +4,6 @@
 
 typedef struct no_ NO;
 
-
 struct no_ {
     long long coef;
     long long grau;
