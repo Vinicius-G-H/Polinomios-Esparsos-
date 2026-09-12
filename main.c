@@ -22,30 +22,42 @@ int main(void) {
         }
 
         if (strcmp(cmd, "DEF") == 0) {
-            char nome[33];
-            int k;
-            if (scanf(" %32s %d", nome, &k) == 2) {
-                int idx = buscar_indice(polinomios, total_p, nome);
-                if (idx != -1) {
-                    polinomio_free(&polinomios[idx]);
-                    polinomios[idx] = polinomio_def(nome, k);
-                } else {
-                    int slot = -1;
-                    for (int i = 0; i < total_p; i++) {
-                        if (polinomios[i] == NULL) {
-                            slot = i;
-                            break;
-                        }
-                    }
-                    if (slot != -1) {
-                        polinomios[slot] = polinomio_def(nome, k);
-                    } else if (total_p < MAX_POLINOMIOS) {
-                        polinomios[total_p] = polinomio_def(nome, k);
-                        total_p++;
-                    }
+    char nome[33];
+    int k;
+    if (scanf(" %32s %d", nome, &k) == 2) {
+        POLINOMIO *novo = polinomio_def(nome, k);
+
+        if (novo != NULL) {
+            for (int i = 0; i < k; i++) {
+                long long c, g;
+                if (scanf(" %lld %lld", &c, &g) == 2) {
+                    polinomio_add(novo, c, g);
                 }
             }
-        } else if (strcmp(cmd, "SOMA") == 0) {
+        }
+
+        int idx = buscar_indice(polinomios, total_p, nome);
+        if (idx != -1) {
+            polinomio_free(&polinomios[idx]);
+            polinomios[idx] = novo;
+        } else {
+            int slot = -1;
+            for (int i = 0; i < total_p; i++) {
+                if (polinomios[i] == NULL) {
+                    slot = i;
+                    break;
+                }
+            }
+            if (slot != -1) {
+                polinomios[slot] = novo;
+            } else if (total_p < MAX_POLINOMIOS) {
+                polinomios[total_p] = novo;
+                total_p++;
+            }
+        }
+    }
+}
+         else if (strcmp(cmd, "SOMA") == 0) {
             char nomeA[33], nomeB[33], nomeR[33];
             if (scanf(" %32s %32s %32s", nomeA, nomeB, nomeR) == 3) {
                 POLINOMIO *A = buscar_polinomio(polinomios, total_p, nomeA);
