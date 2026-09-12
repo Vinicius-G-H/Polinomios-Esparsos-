@@ -6,31 +6,6 @@
 
 #define MAX_POLINOMIOS 512
 
-static POLINOMIO* buscar_polinomio(POLINOMIO **vetor, int qtd, const char *nome) {
-    if (nome == NULL) return NULL;
-    for (int i = 0; i < qtd; i++) {
-        if (vetor[i] != NULL) {
-            const char *nome_p = polinomio_get_nome(vetor[i]);
-            if (nome_p != NULL && strcmp(nome_p, nome) == 0) {
-                return vetor[i];
-            }
-        }
-    }
-    return NULL;
-}
-
-static int buscar_indice(POLINOMIO **vetor, int qtd, const char *nome) {
-    if (nome == NULL) return -1;
-    for (int i = 0; i < qtd; i++) {
-        if (vetor[i] != NULL) {
-            const char *nome_p = polinomio_get_nome(vetor[i]);
-            if (nome_p != NULL && strcmp(nome_p, nome) == 0) {
-                return i;
-            }
-        }
-    }
-    return -1;
-}
 
 int main(void) {
     POLINOMIO *polinomios[MAX_POLINOMIOS];
