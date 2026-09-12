@@ -96,3 +96,5 @@ boolean liberar(POLINOMIO **p) {
     *p = NULL;
     return TRUE;
 }
+
+

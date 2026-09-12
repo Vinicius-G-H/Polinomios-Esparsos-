@@ -1,77 +1,143 @@
-# Polinômios Esparsos — Estruturas de Dados I (ICMC-USP)
+# 🧮 Polinômios Esparsos em C
 
-[![C Standard](https://img.shields.io/badge/C-C11-blue.svg)](https://en.wikipedia.org/wiki/C11_(C_standard_revision))
-[![License](https://img.shields.io/badge/License-Academic-lightgrey.svg)]()
+![C Language](https://img.shields.io/badge/Language-C-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Build](https://img.shields.io/badge/Build-Makefile-orange.svg)
 
-Repositório referente ao **Trabalho Prático 1** da disciplina **SCC0223 - Estruturas de Dados I** do Instituto de Ciências Matemáticas e de Computação (ICMC-USP). O projeto consiste no desenvolvimento de uma biblioteca e interpretador para manipulação eficiente de **polinômios esparsos**.
+Projeto em **Linguagem C** focado no gerenciamento e manipulação de **Polinômios Esparsos** utilizando **listas dinâmicas encadeadas**.
 
----
-
-## 📌 Sobre o Projeto
-
-Em computação científica e álgebra simbólica, polinômios podem atingir graus extremamente elevados (até $10^{18}$), contendo apenas uma pequena fração de termos não nulos. Representar tais polinômios em arrays densos é inviável, pois exigiria quantidades impraticáveis de memória.
-
-A solução é o uso de **estruturas de dados esparsas**, armazenando unicamente os termos com coeficientes diferentes de zero. O programa lê comandos diretamente da entrada padrão (`stdin`) e executa as operações correspondentes até encontrar o comando `FIM`.
+Esta solução otimiza o uso de memória RAM ao armazenar exclusivamente os termos com coeficientes não nulos ($c \cdot x^g$, onde $c 
+eq 0$), garantindo alta performance em operações algébricas com grandes expoentes.
 
 ---
 
-## 🛠️ Convenções e Especificações Técnicas
+## 📋 Sumário
 
-Para atender aos requisitos obrigatórios do trabalho, o código adere estritamente aos seguintes padrões:
-
-* **Executável gerado:** `poliesparso`
-* **Cabeçalho principal:** `polilista.h`
-* **Tipo do termo do polinômio:** `TermoPoli`
-* **Constante de capacidade da tabela de nomes:** `CAP_TERMOS_211`
-* **Padrão de nomenclatura das funções:** `Funcao_poly_(abreviação_da_funcao_p)`
-* **Padrão C:** C11 (especificado via `PADRAO_C11` no `Makefile`)
-* **Flags de compilação:** `-Wall -Wextra -O2 -std=c11`
+- [Estrutura do Projeto](#-estrutura-do-projeto)
+- [Funcionalidades e Comandos](#-funcionalidades-e-comandos)
+- [Como Compilar e Executar](#-como-compilar-e-executar)
+  - [Pré-requisitos](#pré-requisitos)
+  - [Compilando com Makefile](#compilando-com-makefile)
+  - [Executando os Testes Automatizados](#executando-os-testes-automatizados)
+- [Comandos do Interpretador (Entrada Padrão)](#-comandos-do-interpretador-entrada-padrão)
+- [Fluxo de Trabalho no GitHub](#-fluxo-de-trabalho-no-github)
+- [Licença](#-licença)
 
 ---
 
-## 💻 Comandos Suportados
+## 📁 Estrutura do Projeto
 
-| Comando | Descrição | Saída |
+```text
+.
+├── polinomio.h       # Protótipos das funções, macros e definições das estruturas
+├── polinomio.c       # Lógica da lista encadeada e operações algébricas
+├── main.c            # Processador de comandos via entrada padrão (stdin)
+├── Gerador.c         # Gerador automatizado de casos de teste de estresse
+├── Makefile          # Regras de compilação rápida e testes de desempenho
+└── README.md         # Documentação completa do projeto
+```
+
+---
+
+## ⚙️ Funcionalidades e Comandos
+
+O programa lê instruções a partir do `stdin` e suporta as seguintes operações:
+
+| Comando | Sintaxe | Descrição |
 | :--- | :--- | :--- |
-| `DEF nome k` | Define o polinômio `nome` a partir dos $k$ termos fornecidos nas linhas seguintes. | Nenhuma |
-| `SOMA A B R` | Computa $R = A + B$. | Nenhuma |
-| `PROD A B R` | Computa $R = A \times B$. | Nenhuma |
-| `ADD A c g` | Adiciona ao polinômio $A$ o termo de coeficiente $c$ e grau $g$. | Nenhuma |
-| `ESCALA A c` | Multiplica todos os coeficientes de $A$ pelo inteiro $c$. | Nenhuma |
-| `COEF A g` | Consulta o coeficiente correspondente ao grau $g$ em $A$. | Exibe o coeficiente |
-| `REMOVE A g` | Remove de $A$ o termo de grau $g$. | Nenhuma |
-| `REMOVEMENOR A` | Remove de $A$ o termo que possui o menor grau. | Nenhuma |
-| `GRAU A` | Retorna o maior grau com coeficiente não nulo em $A$ (retorna `-1` caso seja o polinômio nulo). | Exibe o grau |
-| `IMPRIME A` | Imprime o polinômio $A$ em ordem canônica (grau decrescente). | Exibe o polinômio |
-| `IMPRIMEINV A` | Imprime o polinômio $A$ em ordem crescente de grau. | Exibe o polinômio |
-| `LIBERA A` | Desaloca a memória de $A$, tornando o nome indefinido. | Nenhuma |
-| `FIM` | Encerra a execução do programa. | Nenhuma |
-
----
-
-## 🚨 Tratamento de Erros e Retornos
-
-* **Comando não reconhecido:** O programa é encerrado imediatamente com código de retorno **3**.
-* **Polinômio não definido:** Imprime a mensagem `erro: polinomio nao definido` no canal de erros (`stderr`) e encerra com código de retorno **2**.
-
----
-
-## 📊 Limites Operacionais
-
-* **Grau do polinômio:** $0$ a $10^{18}$
-* **Coeficientes de entrada:** $-10^3$ a $10^3$
-* **Termos por comando `DEF`:** Até $100.000$
-* **Polinômios ativos simultaneamente:** Até $512$
-* **Comprimento do nome do polinômio:** Até $32$ caracteres
-* **Quantidade total de comandos:** Até $200.000$ por execução
+| **DEF** | `DEF <nome> <k>` | Cria/inicializa um polinômio com o nome especificado |
+| **ADD** | `ADD <nome> <coef> <grau>` | Insere um termo $c \cdot x^g$ no polinômio |
+| **SOMA** | `SOMA <polA> <polB> <res>` | Soma dois polinômios e armazena em `<res>` |
+| **PROD** | `PROD <polA> <polB> <res>` | Multiplica dois polinômios e armazena em `<res>` |
+| **ESCALA** | `ESCALA <nome> <c>` | Multiplica todos os coeficientes pelo escalar $c$ |
+| **COEF** | `COEF <nome> <grau>` | Retorna o coeficiente do termo de grau $g$ |
+| **GRAU** | `GRAU <nome>` | Imprime o grau máximo do polinômio |
+| **REMOVE** | `REMOVE <nome> <grau>` | Remove o termo de grau $g$ |
+| **REMOVEMENOR**| `REMOVEMENOR <nome>` | Remove o termo de menor grau presente |
+| **IMPRIME** | `IMPRIME <nome>` | Imprime os termos do polinômio na ordem padrão |
+| **IMPRIMEINV**| `IMPRIMEINV <nome>` | Imprime os termos em ordem inversa |
+| **LIBERA** | `LIBERA <nome>` | Libera a memória associada ao polinômio |
+| **FIM** | `FIM` | Encerra o interpretador |
 
 ---
 
 ## 🚀 Como Compilar e Executar
 
-### Compilação do Projeto
-Para compilar o código utilizando as flags e variáveis exigidas no `Makefile`:
+### Pré-requisitos
+
+Certifique-se de ter instalado em sua máquina:
+* Compilador `gcc` (suporte a C11 ou superior)
+* Utilitário `make`
+
+### Compilando com Makefile
+
+Para compilar todo o projeto de uma só vez, abra o terminal no diretório do projeto e execute:
 
 ```bash
 make
+```
 
+Isso gerará os seguintes executáveis:
+- `./programa` (Executável principal que processa a entrada)
+- `./gerador` (Gerador de testes esparsos)
+
+### Executando Manualmente
+
+Após compilar, você pode rodar o programa no modo interativo:
+
+```bash
+./programa
+```
+
+Digite os comandos desejados:
+```text
+DEF P1 10
+ADD P1 5 2
+ADD P1 3 0
+IMPRIME P1
+FIM
+```
+
+### Executando os Testes Automatizados
+
+Você pode gerar um arquivo de teste de estresse e medir o tempo de execução com o alvo `run-test`:
+
+```bash
+make run-test
+```
+
+Para limpar todos os executáveis e arquivos temporários `.o`:
+
+```bash
+make clean
+```
+
+---
+
+## 🛠️ Fluxo de Trabalho no GitHub
+
+Se você deseja clonar este repositório, fazer alterações e enviar contribuições, siga os comandos abaixo:
+
+### 1. Clonar o Repositório
+```bash
+git clone https://github.com/SEU-USUARIO/Polinomios-Esparsos.git
+cd Polinomios-Esparsos
+```
+
+### 2. Criar uma nova Branch para alterações
+```bash
+git checkout -b minha-feature
+```
+
+### 3. Salvar as alterações (Commit e Push)
+```bash
+git add .
+git commit -m "feat: adiciona otimização na inserção ordenada"
+git push origin minha-feature
+```
+
+---
+
+## 📄 Licença
+
+Este projeto está distribuído sob a licença **MIT**. Veja o arquivo `LICENSE` para mais detalhes.
