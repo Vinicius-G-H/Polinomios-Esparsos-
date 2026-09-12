@@ -23,10 +23,8 @@ void gerar_polinomio(const char* nome, int* vetor_graus) {
     for (int i = 0; i < NUM_TERMOS; i++) {
         int grau = vetor_graus[i];
         
-        int coef = 0;
-        while (coef == 0) {
-            coef = (rand() % 2001) - 1000;
-        }
+        int coef = (rand() % 2001) - 1000;
+        
         
         printf("%d %d\n", coef, grau);
     }
