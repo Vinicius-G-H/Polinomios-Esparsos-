@@ -7,7 +7,7 @@ MAIN_EXEC = programa
 GERADOR_EXEC = gerador
 
 # Arquivos Fonte e Objetos
-MAIN_SRCS = main.c estrutura.c
+MAIN_SRCS = main.c polinomio.c
 MAIN_OBJS = $(MAIN_SRCS:.c=.o)
 
 GERADOR_SRCS = gerador.c
@@ -31,10 +31,10 @@ $(GERADOR_EXEC): $(GERADOR_OBJS)
 # Medição de Desempenho 
 run-test: all
 	./$(GERADOR_EXEC) > entrada.txt
-	time ./$(MAIN_EXEC) < entrada.txt
+	time ./$(MAIN_EXEC) < entrada.txt > saida.txt
 
 # Limpeza de Arquivos Temporários e Executáveis
 clean:
-	rm -f $(MAIN_OBJS) $(GERADOR_OBJS) $(MAIN_EXEC) $(GERADOR_EXEC) entrada.txt
+	rm -f $(MAIN_OBJS) $(GERADOR_OBJS) $(MAIN_EXEC) $(GERADOR_EXEC) entrada.txt saida.txt
 
 .PHONY: all clean run-test
