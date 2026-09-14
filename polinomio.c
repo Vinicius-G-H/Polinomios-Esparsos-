@@ -369,7 +369,8 @@ void polinomio_imprimir_inv(POLINOMIO *p) {
     }
 
 boolean polinomio_free(POLINOMIO **p) {
-    if ((*p) == NULL || (*p)->head == NULL) return FALSE;
+    if (p == NULL || *p == NULL) return FALSE;
+
     NO *atual = (*p)->head;
     NO *proximo;
     while (atual != NULL) {
@@ -377,7 +378,6 @@ boolean polinomio_free(POLINOMIO **p) {
         free(atual);
         atual = proximo;
     }
-
     free(*p);
     *p = NULL;
     return TRUE;
