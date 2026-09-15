@@ -67,7 +67,6 @@ int main(void) {
                     polinomio_soma(A, B, &novoR);
 
                     if (novoR != NULL) {
-                        /* Atualiza explicitamente o nome da struct resultante */
                         polinomio_set_nome(novoR, nomeR);
 
                         int idxR = buscar_indice(polinomios, total_p, nomeR);
