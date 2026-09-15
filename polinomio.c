@@ -62,6 +62,7 @@ void polinomio_set_nome(POLINOMIO *p, const char *nome) {
 }
 
 POLINOMIO* polinomio_def(const char *nome, int k) {
+    (void)k;
     POLINOMIO *p = (POLINOMIO *)malloc(sizeof(POLINOMIO));
     if (p == NULL) return NULL;
     if (nome != NULL) {
@@ -160,7 +161,6 @@ boolean polinomio_soma(POLINOMIO *A, POLINOMIO *B, POLINOMIO **R) {
 
     (*R)->head = NULL;
     (*R)->tail = NULL;
-    snprintf((*R)->nome, sizeof((*R)->nome), "(%s)+(%s)", A->nome, B->nome);
 
     NO *pA = A->head;
     NO *pB = B->head;
@@ -186,7 +186,6 @@ boolean polinomio_soma(POLINOMIO *A, POLINOMIO *B, POLINOMIO **R) {
             pB = pB->prox;
         }
 
-        // Adiciona ao final de R apenas se o coeficiente resultante for diferente de zero
         if (c != 0) {
             NO *novo = (NO *)malloc(sizeof(NO));
             if (novo == NULL) {
@@ -226,7 +225,6 @@ boolean polinomio_prod(POLINOMIO *A, POLINOMIO *B, POLINOMIO **R) {
 
     (*R)->head = NULL;
     (*R)->tail = NULL;
-    snprintf((*R)->nome, sizeof((*R)->nome), "(%s)*(%s)", A->nome, B->nome);
 
     if (A->head == NULL || B->head == NULL) {
         return TRUE;
@@ -378,6 +376,7 @@ boolean polinomio_free(POLINOMIO **p) {
         free(atual);
         atual = proximo;
     }
+
     free(*p);
     *p = NULL;
     return TRUE;
