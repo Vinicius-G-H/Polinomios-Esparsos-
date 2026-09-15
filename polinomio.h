@@ -22,7 +22,7 @@ long long polinomio_grau(POLINOMIO *p);
 void polinomio_imprimir(POLINOMIO *p);
 void polinomio_imprimir_inv(POLINOMIO *p);
 boolean polinomio_free(POLINOMIO **p);
-int buscar_indice(POLINOMIO **vetor, int qtd, const char *nome) ; //coloquei aqui
-POLINOMIO* buscar_polinomio(POLINOMIO **vetor, int qtd, const char *nome); //coloquei aqui
+int buscar_indice(POLINOMIO **vetor, int qtd, const char *nome) ;
+POLINOMIO* buscar_polinomio(POLINOMIO **vetor, int qtd, const char *nome); 
 
 #endif
