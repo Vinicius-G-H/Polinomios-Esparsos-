@@ -35,7 +35,6 @@ int main(void) {
 
     int *vetor_graus = (int *)malloc((MAX_GRAU + 1) * sizeof(int));
     if (vetor_graus == NULL) {
-        fprintf(stderr, "Erro: Falha ao alocar memória para o vetor de graus.\n");
         return 1;
     }
     for (int i = 0; i <= MAX_GRAU; i++) {
