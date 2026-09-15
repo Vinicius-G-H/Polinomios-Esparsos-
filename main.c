@@ -26,15 +26,12 @@ int main(void) {
     int k;
     if (scanf(" %32s %d", nome, &k) == 2) {
         POLINOMIO *novo = polinomio_def(nome, k);
-
-        if (novo != NULL) {
-            for (int i = 0; i < k; i++) {
-                long long c, g;
-                if (scanf(" %lld %lld", &c, &g) == 2) {
-                    polinomio_add(novo, c, g);
-                }
-            }
+    for (int i = 0; i < k; i++) {
+        long long c, g;
+        if (scanf(" %lld %lld", &c, &g) == 2) {
+            if (novo != NULL) polinomio_add(novo, c, g);
         }
+    }
 
         int idx = buscar_indice(polinomios, total_p, nome);
         if (idx != -1) {
@@ -53,6 +50,8 @@ int main(void) {
             } else if (total_p < MAX_POLINOMIOS) {
                 polinomios[total_p] = novo;
                 total_p++;
+            } else {
+                polinomio_free(&novo);
             }
         }
     }
@@ -86,6 +85,8 @@ int main(void) {
                             } else if (total_p < MAX_POLINOMIOS) {
                                 polinomios[total_p] = novoR;
                                 total_p++;
+                            } else {
+                                polinomio_free(&novo);
                             }
                         }
                     }
@@ -120,6 +121,8 @@ int main(void) {
                             } else if (total_p < MAX_POLINOMIOS) {
                                 polinomios[total_p] = novoR;
                                 total_p++;
+                            } else {
+                                polinomio_free(&novo);
                             }
                         }
                     }
