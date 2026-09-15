@@ -86,7 +86,7 @@ int main(void) {
                                 polinomios[total_p] = novoR;
                                 total_p++;
                             } else {
-                                polinomio_free(&novo);
+                                polinomio_free(&novoR);
                             }
                         }
                     }
@@ -122,7 +122,7 @@ int main(void) {
                                 polinomios[total_p] = novoR;
                                 total_p++;
                             } else {
-                                polinomio_free(&novo);
+                                polinomio_free(&novoR);
                             }
                         }
                     }
